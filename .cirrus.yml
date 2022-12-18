@@ -5,19 +5,20 @@ env: # Environment variables to pass to all tasks
     # For rclone with google drive or any cloud! After first commit pushing, login to https://cirrus-ci.com , click top left corner 3 dot menu, click repository(yourname/aosp-builder) > Repository Settings > Secured Variables > enter content of ~/.config/rclone/rclone.conf (from pc where you setup rclone) > ENCRYPT, copy that ENCRYPTED hash
     # ENCRYPTED variables is unique for every repository, so you cant use my one, create you rclone config https://rclone.org/drive/#making-your-own-client-id
     # CHAT_ID and BOT_TOKEN are used by telegram functions. I don't want you to control my bot xD
-    rclone_config: "ENCRYPTED[22d6a713d8e45813b377af7f203c525f853dff1e31e07839d7dc2ab2d79963d371cc93615fa984c68051da43c5ee73b4]"
-    CHAT_ID: "ENCRYPTED[12575fb3553c5bf8b702492411cae44ab83a682ac1ae674c86e66a481ad76f53efbfcb42a96fb6b2c2feaffd0bc42093]"
-    BOT_TOKEN: "ENCRYPTED[886952daa9fad8f284f16b8cfc594ca26513c4e10f6b6356e17d88f43b3233439766b6754cd12d02dad22c12242cb17e]"
+    rclone_config: "ENCRYPTED[4e5ef4f5e99040b919db7f50d34b3ab56c3d0867102aa6424fa74bb451fde7f6c044f41a93ad47199880fbb9f397519e]"
+    CHAT_ID: "ENCRYPTED[984cbd05239727c96d1bd4e6967ceb20e59c1d43ae88397deb6a6437f038a4e9ec661a4f8e02dca45521da87bebc6522]"
+    BOT_TOKEN: "ENCRYPTED[758df929c88645aa42315c5bdfc8175754c3bc4254df22f9376d03d640692a716529ece485badadc2a73664a3e15d594]"
     
     # Github variables needed so as to be able to clone private repos too without authenticating. Useful for building official roms which have private repos. The first 3 variables needs to be encrypted!! You can hide your email and username by encrypting them too if you want but that's not neccessary.
-    id_rsa_pub: "ENCRYPTED[88a970721bf494e9908f1b7f40e65b7f0e561831d61fed38f939f041af05e6a40860b11109eef1ad98b8dd72a04662e8]"
-    id_rsa: "ENCRYPTED[af90c07607a501477567e835350ad567c3e5f4df38b686d7c8510856fe0e9e4f5588b9901563edabd5da13d35becf2f2]"
-    known_hosts: "ENCRYPTED[85e9051458da467ef24cc83fe500c4486348ad96c6f95c2d3a1ae536296a0f6eea3eba50c739d0dc1961d38034437197]"
-    user_email: "ardimasgalang5@gmail.com"
-    user_name: "galang8664"
+    #id_rsa_pub: "ENCRYPTED[88a970721bf494e9908f1b7f40e65b7f0e561831d61fed38f939f041af05e6a40860b11109eef1ad98b8dd72a04662e8]"
+    #id_rsa: "ENCRYPTED[af90c07607a501477567e835350ad567c3e5f4df38b686d7c8510856fe0e9e4f5588b9901563edabd5da13d35becf2f2]"
+    #known_hosts: "ENCRYPTED[85e9051458da467ef24cc83fe500c4486348ad96c6f95c2d3a1ae536296a0f6eea3eba50c739d0dc1961d38034437197]"
+    #user_email: "ardimasgalang5@gmail.com"
+    #user_name: "galang8664"
     
 task:
     name: aosp # Project name
+    skip: $CIRRUS_BRANCH == 'main'
     only_if: $CIRRUS_REPO_OWNER == 'galang8664'
     timeout_in: 120m # Otherwise it will timeout at 60m automatically, 120m highest in free account
     persistent_worker:
