@@ -7,7 +7,7 @@ cd /tmp/rom
 repo init -u https://github.com/RiceDroid/android -b thirteen -g default,-device,-mips,-darwin,-notdefault
 
 # Clone local manifest! So that no need to manually git clone repos or change hals, you can use normal git clone or rm and re clone, they will cost little more time, and you may get timeout! Let's make it quit and depth=1 too.
-git https://github.com/galang8664/local_manifest.git --depth 1 -b ricenew .repo/local_manifests
+git clone https://github.com/galang8664/local_manifest.git --depth 1 -b ricenew .repo/local_manifests
 
 # Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 30 || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
