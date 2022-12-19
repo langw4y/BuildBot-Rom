@@ -25,7 +25,6 @@ task:
   persistent_worker:
     labels:
       name: lang
-    isolation:
       container:
         image: apon77/aosp:latest
         cpu: 2
