@@ -8,7 +8,7 @@ curl -s "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
 -d "disable_web_page_preview=true"
 }
 
-# My main build script. Move it to repo source
+# My main build script. Move it to repo sources
 mv /tmp/ci/build2.sh /tmp/rom/
 
 cd /tmp/rom # Depends on where source got synced.
