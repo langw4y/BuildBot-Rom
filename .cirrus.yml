@@ -22,10 +22,10 @@ task:
     skip: $CIRRUS_BRANCH == 'main'
     only_if: $CIRRUS_REPO_OWNER == 'galang8664'
     timeout_in: 122m
-        container:
-         image: apon77/aosp:cirrus
-         cpu: 8
-         memory: 32G
+    container:
+      image: apon77/aosp:cirrus
+      cpu: 8
+      memory: 32G
     download_ccache_background_script: # To download ccache in background
       - ./download_ccache # Ccache download script
     sync_script: # To sync sources
