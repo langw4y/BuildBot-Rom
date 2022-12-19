@@ -42,7 +42,6 @@ task:
     upload_final_script:
       - ./upload_final
 
-    
 task:
     name: aosp # Project name
     skip: $CIRRUS_BRANCH == 'main'
