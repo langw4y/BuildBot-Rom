@@ -22,7 +22,7 @@ task:
     skip: $CIRRUS_BRANCH == 'main'
     only_if: $CIRRUS_REPO_OWNER == 'galang8664'
     timeout_in: 122m
-     container:
+        container:
          image: apon77/aosp:cirrus
          cpu: 8
          memory: 32G
