@@ -7,7 +7,17 @@ cd /tmp/rom
 repo init -u https://github.com/Evolution-X/manifest -b tiramisu -g default,-device,-mips,-darwin,-notdefault
 
 # Clone local manifest! So that no need to manually git clone repos or change hals, you can use normal git clone or rm and re clone, they will cost little more time, and you may get timeout! Let's make it quit and depth=1 too.
-git clone https://github.com/galang8664/local_manifest.git --depth 1 -b evoxr .repo/local_manifests
+repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
 
 # Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
-repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 30 || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
+git clone https://github.com/galang8664/device-r --depth 1 -b evoxr device/xiaomi/lancelot
+git clone https://github.com/hentaiOS-MT6768/device_xiaomi_mt6768-common --depth 1 -b TwistedScarlett device/xiaomi/mt6768-common
+git clone https://github.com/mt6768-dev/android_kernel_xiaomi_mt6768 --depth 1 -b lineage-20 kernel/xiaomi/mt6768
+git clone https://github.com/hentaiOS-MT6768/vendor_xiaomi --depth 1 -b TwistedScarlett vendor/xiaomi 
+git clone https://github.com/galang8664/common-vendor --depth 1 -b 13-R vendor/xiaomi/mt6768-common
+git clone https://github.com/R9Lab/MTKHardware.git --depth 1 -b lineage-20 hardware/mediatek
+git clone https://github.com/R9Lab/ImsService --depth 1 -b lineage-20 packages/app/ImsService
+git clone https://github.com/https://github.com/R9Lab/MTKFMRadio.git --depth 1 -b lineage-20 packages/apps/MtkFMRadio
+git clone https://github.com/mt6768-dev/vendor_mediatek_opensource_interfaces.git --depth 1 -b vendor/mediatek/opensource/interfaces
+git clone https://github.com/R9Lab/GoodixOpenSourceInterfaces.git --depth 1 -b lineage-20 vendor/goodix/opensource/interfaces
+git clone https://github.com/R9Lab/MTKSepolicyVendor.git --depth 1 -b lineage-20 device/mediatek/sepolicy_vndr
