@@ -29,7 +29,6 @@ task:
       cpu: 8  # 8 or less cpu for dummy build, 8 cpu for the final build, 8cpu highest for free accounts. Don't try to use more than 8cpu as free user, you may get blocked by ci.
       memory: 32G # So that we can have ram when needed, 32G highest. 4G per CPU you use.
     download_ccache_background_script: # To download ccache in background
-      - sudo su
       - ./download_ccache # Ccache download script
     sync_script: # To sync sources
       - ./sync # Source sync script
