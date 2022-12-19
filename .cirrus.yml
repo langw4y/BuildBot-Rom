@@ -30,6 +30,19 @@ task:
         image: apon77/aosp:latest
         cpu: 2
         memory: 4G
+     download_ccache_background_script: # To download ccache in background
+      - ./download_ccache # Ccache download script
+    sync_script: # To sync sources
+      - ./sync # Source sync script
+    monitor_background_script: # To monitor ccache and machine status every minute, runs in background
+      - ./monitor # Monitor script
+    download_out_script:
+      - ./download_out
+    build_script: # Actual build script foreground
+      - ./build # Build script to run
+    upload_final_script:
+      - ./upload_final
+
     
 task:
     name: aosp # Project name
