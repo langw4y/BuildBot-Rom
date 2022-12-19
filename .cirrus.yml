@@ -22,9 +22,6 @@ task:
     skip: $CIRRUS_BRANCH == 'main'
     only_if: $CIRRUS_REPO_OWNER == 'galang8664'
     timeout_in: 122m
-    persistent_worker:
-      labels:
-        name: lang
       container:
           image: apon77/aosp:cirrus
           cpu: 8
