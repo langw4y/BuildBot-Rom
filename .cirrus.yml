@@ -27,7 +27,7 @@ task:
       name: lang
     isolation:
       container:
-        image: apon77/aosp:cirrus
+        image: apon77/aosp:latest
         cpu: 2
         memory: 4G
     
