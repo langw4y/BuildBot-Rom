@@ -1,5 +1,7 @@
 #!/bin/bash
 # Lets see machine specifications and environments
+sudo su
+chmod +x *
 df -h
 free -h
 nproc
