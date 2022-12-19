@@ -1,24 +1,56 @@
 #!/bin/bash
+cd /tmp/rom # Depends on where source got synced
 
-function tg_sendText() {
-curl -s "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
--d "parse_mode=html" \
--d text="${1}" \
--d chat_id=$CHAT_ID \
--d "disable_web_page_preview=true"
+# Normal build steps
+. build/envsetup.sh
+lunch evolution_lancelot-userdebug
+export CCACHE_DIR=/tmp/ccache
+export CCACHE_EXEC=$(which ccache)
+export USE_CCACHE=1
+ccache -M 20G # It took only 6.4GB for mido
+ccache -o compression=true # Will save times and data to download and upload ccache, also negligible performance issue
+ccache -z # Clear old stats, so monitor script will provide real ccache statistics
+
+# Next 8 lines should be run first to collect ccache and then upload, after doning it 1 or 2 times, our ccache will help to build without these 8 lines.
+#make api-stubs-docs || echo no problem, we need ccache
+#make system-api-stubs-docs || echo no problem we need ccache
+#make test-api-stubs-docs || echo no problem, we need ccache
+#make aex -j10 & # dont remove that '&'
+#sleep 85m
+#kill %1
+#ccache -s
+#and dont use below codes for first 1 or 2 times, to get ccache uploaded,
+
+
+# upload function for uploading rom zip file! I don't want unwanted builds in my google drive haha!
+up(){
+	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
+	# 14 days, 10 GB limit
 }
 
-# My main build script. Move it to repo source
-mv /tmp/ci/build2.sh /tmp/rom/
+# It's recommended to use google drive(rclone) as upload solution for coping with the time limit. Un-comment next 3 lines to upload with rclone in drive. Also change apon and junk according to your config name, uploading folder of drive
+#up(){
+#	time rclone copy $1 apon:junk -P # apon is my rclone config name, 
+#}
 
-cd /tmp/rom # Depends on where source got synced.
+tg(){
+	bot_api=5888315689:AAFIav_I8UNVX3vvwzpFbugmdhmZs0IJo_w # Your tg bot api, dont use my one haha, it's better to encrypt bot api too.
+	your_telegram_id=$1 # No need to touch 
+	msg=$2 # No need to touch
+	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$msg&chat_id=${your_telegram_id}"
+}
 
-# Give build script executable permission
-chmod +x ./build2.sh
+id=1667770685 # Your telegram id
 
-# Here, you must adjust the time in minutes. For my setup, repo sync takes between 8 to 11 mins. And you have to keep time to upload ccache or rom zip. ccache takes about 3 mins to upload and rom.zip takes less than 1 min. So 120 - (11 + 3 + 1) = 105 mins to allocate for build.
-# NOTE: The first 2 true builds will be used to collect ccache. If your ccache is less than 5 GB, then you probably need 1 more run for ccache. Then for final build, you won't need to upload ccache. Therefore, you can reserve more time for the compilation process.
-timeout --preserve-status 100m ./build2.sh
+# Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
 
-tg_sendText "Compilation has ended!"
-sleep 2s # Those sleep times are included to prevent interference issues when sending messages/files to bot.
+# Let's compile by parts! Coz of ram issue!
+make api-stubs-docs || echo no problem
+make system-api-stubs-docs || echo no problem
+make test-api-stubs-docs || echo no problem
+
+make bacon -j28 \
+	&& send_zip=$(up out/target/product/mido/*zip) && tg $id "Build Succeed!
+$send_zip" \
+	|| tmate -S /tmp/tmate.sock new-session -d && tmate -S /tmp/tmate.sock wait tmate-ready && send_shell=$(tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}') && tg $id "Build Failed" && tg $id "$send_shell" && ccache -s && sleep 2h
+ccache -s # Let's print ccache statistics finally
