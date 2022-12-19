@@ -27,8 +27,8 @@ task:
         name: lang
       container:
           image: apon77/aosp:latest
-          cpu: 2
-          memory: 4G
+          cpu: 8
+          memory: 32G
     download_ccache_background_script: # To download ccache in background
       - ./download_ccache # Ccache download script
     sync_script: # To sync sources
