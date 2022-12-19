@@ -9,7 +9,7 @@ env: # Environment variables to pass to all tasks
     CHAT_ID: "ENCRYPTED[984cbd05239727c96d1bd4e6967ceb20e59c1d43ae88397deb6a6437f038a4e9ec661a4f8e02dca45521da87bebc6522]"
     BOT_TOKEN: "ENCRYPTED[758df929c88645aa42315c5bdfc8175754c3bc4254df22f9376d03d640692a716529ece485badadc2a73664a3e15d594]"
     
-    # Github variables needed so as to be able to clone private repos too without authenticating. Useful for building official roms which have private repos. The first 3 variables needs to be encrypted!! You can hide your email and username by encrypting them too if you want but that's not neccessary.
+    # Github variables needed so as to be able to clone private repos too without authenticating. Useful for building officials roms which have private repos. The first 3 variables needs to be encrypted!! You can hide your email and username by encrypting them too if you want but that's not neccessary.
     #id_rsa_pub: "ENCRYPTED[88a970721bf494e9908f1b7f40e65b7f0e561831d61fed38f939f041af05e6a40860b11109eef1ad98b8dd72a04662e8]"
     #id_rsa: "ENCRYPTED[af90c07607a501477567e835350ad567c3e5f4df38b686d7c8510856fe0e9e4f5588b9901563edabd5da13d35becf2f2]"
     #known_hosts: "ENCRYPTED[85e9051458da467ef24cc83fe500c4486348ad96c6f95c2d3a1ae536296a0f6eea3eba50c739d0dc1961d38034437197]"
