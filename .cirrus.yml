@@ -35,7 +35,6 @@ task:
     monitor_background_script: # To monitor ccache and machine status every minute, runs in background
       - ./monitor # Monitor script
     download_out_script:
-      - chmod +x *
       - ./download_out
     build_script: # Actual build script foreground
       - ./build # Build script to run
