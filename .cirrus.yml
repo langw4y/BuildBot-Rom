@@ -25,7 +25,7 @@ task:
     persistent_worker:
       labels:
         name: lang
-        container:
+      container:
           image: apon77/aosp:latest
           cpu: 2
           memory: 4G
