@@ -1,0 +1,37 @@
+#!/bin/bash
+
+function tg_sendText() {
+curl -s "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
+-d "parse_mode=html" \
+-d text="${1}" \
+-d chat_id=$CHAT_ID \
+-d "disable_web_page_preview=true"
+}
+
+# I'm collecting ccache for all ROMs that I build inorder to speed up all future updates that I will release for those ROMs.
+# So when a new build will upload ccache, it should not overwrite the ccache i saved for another ROM!
+# Therefore, I'm using the branch on which Cirrus CI is running to rename the ccache.tar files before uploading them.
+# For e.g, if Cirrus CI is running on branch "sakura_arm64", the compressed ccache will be renamed to "sakura_arm64_out.tar.gz" and uploaded.
+# The upload_ccache script will be amended as needed to properly extract the ccache to the right folder.
+CCACHE_FILE="$CIRRUS_BRANCH""_out.tar.gz"
+
+tg_sendText "Downloading out folder"
+
+# METHOD 1: Download using aria2c:
+# Where ccache is located, use your own if you don't want to use my "prebuilt ccaches" xD
+# cd /tmp
+# url=https://ccache.chatur27.workers.dev/$CCACHE_FILE
+# time aria2c $url -x16 -s50 # Using aria2c for speed haha, ccache will be at /tmp/$CCACHE_FILE
+
+# METHOD 2: Download using Google Drive direcly (I have a premium account..HAHA):
+time rclone copy aosp:$CCACHE_FILE /tmp/rom/
+cd /tmp/rom # Where out has been downloaded
+
+
+mv $CCACHE_FILE out.tar.gz # Rename back to original folder name before extracting
+time tar xf out.tar.gz  # Extract ccache so ci can use it
+rm -rf out.tar.gz # Remove unnecessary downloaded file, it will speed up the upload out process
+(df -h && echo '' && ls -a) | tee out_monitor.txt
+tg_sendFile "out_monitor.txt"
+sleep 2s
+tg_sendText "Out folder downloaded sucessfully"
