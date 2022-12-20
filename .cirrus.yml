@@ -1,40 +1,30 @@
-env: # Environment variables to pass to all tasks
-    CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
+env: 
+    CIRRUS_CLONE_DEPTH: 1 
     CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone the aosp-builder repo
 
     # For rclone with google drive or any cloud! After first commit pushing, login to https://cirrus-ci.com , click top left corner 3 dot menu, click repository(yourname/aosp-builder) > Repository Settings > Secured Variables > enter content of ~/.config/rclone/rclone.conf (from pc where you setup rclone) > ENCRYPT, copy that ENCRYPTED hash
     # ENCRYPTED variables is unique for every repository, so you cant use my one, create you rclone config https://rclone.org/drive/#making-your-own-client-id
-    # CHAT_ID and BOT_TOKEN are used by telegram functions. I don't want you to control my bot xD
-    rclone_config: "ENCRYPTED[3207e4ceace57ce08845ed3cc95f17591f04253c0d6b69c40524757580aab9cbea44ab548daea6e3be34eba666e8ccc8]"
-    CHAT_ID: "ENCRYPTED[9ea95abb88f139b68552bbce2948fc9acfb62ebbe38b87b68d04728353c495b75700426a49dccbe74d2fa002c32fe145]"
-    BOT_TOKEN: "ENCRYPTED[0f11b06d3baae4a42bacd689bc709072d4626f2783c2f7275a7f1920f5ca3d51728a5750d82192f073a7208ad6f0e9f8]"
-    
-    # Github variables needed so as to be able to clone private repos too without authenticating. Useful for building officials roms which have private repos. The first 3 variables needs to be encrypted!! You can hide your email and username by encrypting them too if you want but that's not neccessary.
-    #id_rsa_pub: "ENCRYPTED[88a970721bf494e9908f1b7f40e65b7f0e561831d61fed38f939f041af05e6a40860b11109eef1ad98b8dd72a04662e8]"
-    #id_rsa: "ENCRYPTED[af90c07607a501477567e835350ad567c3e5f4df38b686d7c8510856fe0e9e4f5588b9901563edabd5da13d35becf2f2]"
-    #known_hosts: "ENCRYPTED[85e9051458da467ef24cc83fe500c4486348ad96c6f95c2d3a1ae536296a0f6eea3eba50c739d0dc1961d38034437197]"
-    #user_email: "ardimasgalang5@gmail.com"
-    #user_name: "galang8664"
+    rclone_config: "ENCRYPTED[98d10e4c14ce2b2c3b572de6a40c09482a5c066ca1fb530ba255f60284bf562fb5ac252767931cca207ef839b1a569fe]"
+    bot_api: "ENCRYPTED[0f11b06d3baae4a42bacd689bc709072d4626f2783c2f7275a7f1920f5ca3d51728a5750d82192f073a7208ad6f0e9f8]"
+    manifest: "https://github.com/Evolution-X/manifest"
+    branch: "tiramisu"
+    local: "https://github.com/galang8664/local_manifest"
+    localbranch: "evoxr"
     
 task:
-    name: aosp # Project name
-    skip: $CIRRUS_BRANCH == 'main'
-    only_if: $CIRRUS_REPO_OWNER == 'galang8664'
-    timeout_in: 120m # Otherwise it will timeout at 60m automatically, 120m highest in free account
-    persistent_worker:
-      labels:
-        name: lang
+    name: aosp 
+    timeout_in: 120m 
     container:
-      image: apon77/aosp:latest # It has built-in setup environment + repo, aria2, rclone, pigz, username ci, and email ci@ci.ci [You can use your own docker image if you want, or you can use this one too!]
-      cpu: 8  # 8 or less cpu for dummy build, 8 cpu for the final build, 8cpu highest for free accounts. Don't try to use more than 8cpu as free user, you may get blocked by ci.
-      memory: 32G # So that we can have ram when needed, 32G highest. 4G per CPU you use.
-    download_ccache_background_script: # To download ccache in background
-      - ./download # Ccache download script
-    sync_script: # To sync sources
-      - ./sync # Source sync script
-    monitor_background_script: # To monitor ccache and machine status every minute, runs in background
-      - ./monitor # Monitor script
-    build_script: # Actual build script foreground
-      - ./build # Build script to run
-    upload_final_script:
+      image: apon77/aosp:cirrus 
+      cpu: 8  
+      memory: 32G 
+    download_ccache_background_script:
+      - ./download
+    sync_script:
+      - ./sync
+    monitor_background_script: 
+      - ./monitor 
+    build_script:
+      - ./build
+    upload_ccache_script:
       - ./upload
