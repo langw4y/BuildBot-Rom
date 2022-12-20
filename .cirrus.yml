@@ -12,19 +12,24 @@ env:
     localbranch: "evoxr"
     
 task:
-    name: evoxr 
-    timeout_in: 120m 
+    name: aosp # Project name
+    skip: $CIRRUS_BRANCH == 'main'
+    only_if: $CIRRUS_REPO_OWNER == 'galang8664'
+    timeout_in: 120m # Otherwise it will timeout at 60m automatically, 120m highest in free account
+    persistent_worker:
+      labels:
+        name: lang
     container:
-      image: apon77/aosp:latest
-      cpu: 8  
-      memory: 32G 
-    download_ccache_background_script:
-      - ./download
-    sync_script:
-      - ./sync
-    monitor_background_script: 
-      - ./monitor 
-    build_script:
-      - ./build
-    upload_ccache_script:
+      image: apon77/aosp:latest # It has built-in setup environment + repo, aria2, rclone, pigz, username ci, and email ci@ci.ci [You can use your own docker image if you want, or you can use this one too!]
+      cpu: 8  # 8 or less cpu for dummy build, 8 cpu for the final build, 8cpu highest for free accounts. Don't try to use more than 8cpu as free user, you may get blocked by ci.
+      memory: 32G # So that we can have ram when needed, 32G highest. 4G per CPU you use.
+    download_ccache_background_script: # To download ccache in background
+      - ./download # Ccache download script
+    sync_script: # To sync sources
+      - ./sync # Source sync script
+    monitor_background_script: # To monitor ccache and machine status every minute, runs in background
+      - ./monitor # Monitor script
+    build_script: # Actual build script foreground
+      - ./build # Build script to run
+    upload_final_script:
       - ./upload
