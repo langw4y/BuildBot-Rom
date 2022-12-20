@@ -4,13 +4,13 @@ mkdir -p /tmp/rom # Where to sync source
 cd /tmp/rom
 
 # Repo init command, that -device,-mips,-darwin,-notdefault part will save you more time and storage to sync, add more according to your rom and choice. Optimization is welcomed! Let's make it quit, and with depth=1 so that no unnecessary things.
-repo init -u https://github.com/Evolution-X/manifest -b tiramisu -g default,-device,-mips,-darwin,-notdefault
+repo init -u https://github.com/crdroidandroid/android.git -b 13.0 -g default,-device,-mips,-darwin,-notdefault
 
 # Clone local manifest! So that no need to manually git clone repos or change hals, you can use normal git clone or rm and re clone, they will cost little more time, and you may get timeout! Let's make it quit and depth=1 too.
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
 
 # Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
-git clone https://github.com/galang8664/device-r --depth 1 -b evoxr device/xiaomi/lancelot
+git clone https://github.com/galang8664/device-r --depth 1 -b lineage-20 device/xiaomi/lancelot
 git clone https://github.com/hentaiOS-MT6768/device_xiaomi_mt6768-common --depth 1 -b TwistedScarlett device/xiaomi/mt6768-common
 git clone https://github.com/mt6768-dev/android_kernel_xiaomi_mt6768 --depth 1 -b lineage-20 kernel/xiaomi/mt6768
 git clone https://github.com/hentaiOS-MT6768/vendor_xiaomi --depth 1 -b TwistedScarlett vendor/xiaomi 
