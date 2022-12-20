@@ -15,7 +15,7 @@ task:
     name: evoxr 
     timeout_in: 120m 
     container:
-      image: apon77/aosp:cirrus 
+      image: apon77/aosp:latest
       cpu: 8  
       memory: 32G 
     download_ccache_background_script:
