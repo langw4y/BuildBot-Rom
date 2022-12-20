@@ -12,7 +12,7 @@ env:
     localbranch: "evoxr"
     
 task:
-    name: aosp 
+    name: evoxr 
     timeout_in: 120m 
     container:
       image: apon77/aosp:cirrus 
