@@ -12,8 +12,7 @@ task:
   persistent_worker:
     labels:
       name: lang
-    isolation:
-      container:
+    container:
         image: apon77/aosp:cirrus
         cpu: 24
         memory: 120G
