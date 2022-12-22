@@ -1,7 +1,7 @@
 # sync rom
-repo init --depth=1 --no-repo-verify -u https://github.com/hentaiOS/platform_manifest -b TwistedScarlett -g default,-mips,-darwin,-notdefault
+repo init --depth=1 --no-repo-verify -u https://github.com/crdroidandroid/android.git -b 13.0 -g default,-mips,-darwin,-notdefault
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
-git clone https://github.com/galang8664/device-r --depth 1 -b hentai device/xiaomi/lancelot
+git clone https://github.com/galang8664/device-r --depth 1 -b lineage-20 device/xiaomi/lancelot
 git clone https://github.com/hentaiOS-MT6768/device_xiaomi_mt6768-common --depth 1 -b TwistedScarlett device/xiaomi/mt6768-common
 git clone https://github.com/mt6768-dev/android_kernel_xiaomi_mt6768 --depth 1 -b lineage-20 kernel/xiaomi/mt6768
 git clone https://github.com/hentaiOS-MT6768/vendor_xiaomi --depth 1 -b TwistedScarlett vendor/xiaomi 
@@ -14,7 +14,7 @@ git clone https://github.com/R9Lab/MTKSepolicyVendor.git --depth 1 -b lineage-20
 
 # build rom
 source build/envsetup.sh
-lunch hentai_lancelot-userdebug
+lunch lineage_lancelot-userdebug
 export TZ=Asia/Dhaka #put before last build command
 mka bacon
 
