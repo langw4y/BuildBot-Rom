@@ -14,7 +14,7 @@ task:
     labels:
       name: lang
     container:
-        image: apon77/aosp:cirrus
+        image: apon77/aosp:latest
         cpu: 24
         memory: 120G
         volumes:
