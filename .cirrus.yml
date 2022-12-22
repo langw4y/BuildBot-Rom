@@ -6,25 +6,25 @@ env:
     
 
 task:
-  name: Build
-  skip: $CIRRUS_BRANCH == 'main'
-  only_if: $CIRRUS_REPO_OWNER == 'galang8664'
-  timeout_in: 4h
-  persistent_worker:
-    labels:
-      name: lang
+    name: Build # Project name
+    skip: $CIRRUS_BRANCH == 'main'
+    only_if: $CIRRUS_REPO_OWNER == 'galang8664'
+    timeout_in: 120m # Otherwise it will timeout at 60m automatically, 120m highest in free account
+    persistent_worker:
+      labels:
+        name: lang
     container:
-        image: apon77/aosp:cirrus
-        cpu: 24
-        memory: 120G
-        volumes:
-          - /home/cirrus/roms:/home/cirrus/roms
-          - /home/cirrus/ccache:/home/cirrus/ccache
-          - /home/cirrus/.config:/home/cirrus/.config
-
-  show_script:
+      image: apon77/aosp:latest # It has built-in setup environment + repo, aria2, rclone, pigz, username ci, and email ci@ci.ci [You can use your own docker image if you want, or you can use this one too!]
+      cpu: 8  # 8 or less cpu for dummy build, 8 cpu for the final build, 8cpu highest for free accounts. Don't try to use more than 8cpu as free user, you may get blocked by ci.
+      memory: 32G
+      volumes:
+        - /home/cirrus/roms:/home/cirrus/roms
+        - /home/cirrus/ccache:/home/cirrus/ccache
+        - /home/cirrus/.config:/home/cirrus/.config
+    
+    show_script:
     - cat $CIRRUS_WORKING_DIR/build_rom.sh
-  sync_script:
+    sync_script:
     - set -e
     - rom_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d / -f 4)
     - branch_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh | awk -F "-b " '{print $2}' | awk '{print $1}')
@@ -100,7 +100,7 @@ task:
 
     - rm -rf sync.log
 
-  build_script:
+    build_script:
     - set -e
     - rom_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d / -f 4)
     - branch_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh | awk -F "-b " '{print $2}' | awk '{print $1}')
@@ -120,7 +120,7 @@ task:
     - command=$(tail $CIRRUS_WORKING_DIR/build_rom.sh -n +$(expr $(grep 'build/envsetup.sh' $CIRRUS_WORKING_DIR/build_rom.sh -n | cut -f1 -d:) - 1)| head -n -1 | grep -v 'rclone copy')
     - bash -c "$command"
 
-  ccache_stats_script:
+    ccache_stats_script:
     - set -e
     - rom_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d / -f 4)
     - branch_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh | awk -F "-b " '{print $2}' | awk '{print $1}')
@@ -133,7 +133,7 @@ task:
     - export CCACHE_DIR=~/ccache/$rom_name/$device
     - ccache -s
 
-  upload_script:
+    upload_script:
     - set -e
     - rom_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d / -f 4)
     - branch_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh | awk -F "-b " '{print $2}' | awk '{print $1}')
@@ -163,7 +163,7 @@ task:
     - file=out/target/product/$device/*.zip
     - rsync -vhcP build_rom.sh -e "ssh -o Compression=no" galang8664@frs.sourceforge.net:/home/frs/project/rom-buildbot/
     - echo "Download link https://sourceforge.net/projects/rom-builders/files/$device/$dlink/download"
-  remove_script:
+    remove_script:
     - set -e
     - rom_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d / -f 4)
     - branch_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh | awk -F "-b " '{print $2}' | awk '{print $1}')
@@ -177,22 +177,19 @@ task:
     - rm -rf out/target/product/$device
 
 task:
-  name: Post Build
-  skip: $CIRRUS_BRANCH == 'main'
-  only_if: $CIRRUS_REPO_OWNER == 'galang8664'
-  skip_notifications: true
-  depends_on:
-    - Build
-  timeout_in: 2m
-  persistent_worker:
-    labels:
-      name: lang
+    name: Post Build # Project name
+    skip: $CIRRUS_BRANCH == 'main'
+    only_if: $CIRRUS_REPO_OWNER == 'galang8664'
+    timeout_in: 120m # Otherwise it will timeout at 60m automatically, 120m highest in free account
+    persistent_worker:
+      labels:
+        name: lang
     container:
-        image: apon77/aosp:cirrus
-        cpu: 2
-        memory: 4G
-
-  post_build_script:
+      image: apon77/aosp:latest # It has built-in setup environment + repo, aria2, rclone, pigz, username ci, and email ci@ci.ci [You can use your own docker image if you want, or you can use this one too!]
+      cpu: 8  # 8 or less cpu for dummy build, 8 cpu for the final build, 8cpu highest for free accounts. Don't try to use more than 8cpu as free user, you may get blocked by ci.
+      memory: 32G
+     
+    post_build_script:
     - set -e
     - rom_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d / -f 4)
     - branch_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh | awk -F "-b " '{print $2}' | awk '{print $1}')
@@ -202,7 +199,7 @@ task:
     - grep _laurel_sprout $CIRRUS_WORKING_DIR/build_rom.sh > /dev/null && device=laurel_sprout
     - grep _GM8_sprout $CIRRUS_WORKING_DIR/build_rom.sh > /dev/null && device=GM8_sprout
     - grep _maple_dsds $CIRRUS_WORKING_DIR/build_rom.sh > /dev/null && device=maple_dsds
-    - your_telegram_id=@ROM_builders_channel
+    - your_telegram_id=@Lang8664
     - curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" -d "text=<code>$device-$rom_name</code> Succeed
       
       https://cirrus-ci.com/build/$CIRRUS_BUILD_ID" -d "chat_id=${your_telegram_id}" -d "parse_mode=HTML"
