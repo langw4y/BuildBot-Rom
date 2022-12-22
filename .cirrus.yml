@@ -2,7 +2,7 @@ env:
     CIRRUS_CLONE_DEPTH: 1
     BUILD_HOSTNAME: "cirrus-ci.org"
     bot_api: "ENCRYPTED[758df929c88645aa42315c5bdfc8175754c3bc4254df22f9376d03d640692a716529ece485badadc2a73664a3e15d594]"
-    one: "ENCRYPTED[267097e8096e1e12efc9c6e71626703ddc8ae1c6730511b6207586a045e2dd3bd59dd0b9d632642fc58d89913cc539a8]"
+    one: "ENCRYPTED[1004e6a0e5fc2c3371ea7e2a8f3c9ac9f810a5d2d529fdf1b30616f18dc64607f3bf8b6992aa6f8ca8e2940cbad99ccb]"
     
 
 task:
@@ -161,7 +161,8 @@ task:
     - #echo "Download link https://roms.cirrus-ci.workers.dev/0:/$device/$dlink"
     - unzip -P $one -q ~/.config/1.zip -d ~
     - file=out/target/product/$device/*.zip
-    - rsync -vhcP -e ssh $file apon77@frs.sourceforge.net:/home/frs/project/rom-builders/$device/
+    - rsync -vhcP build_rom.sh -e "ssh -o Compression=no" galang8664@frs.sourceforge.n
+et:/home/frs/project/rom-buildbot/
     - echo "Download link https://sourceforge.net/projects/rom-builders/files/$device/$dlink/download"
   remove_script:
     - set -e
