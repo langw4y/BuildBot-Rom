@@ -21,10 +21,10 @@ task:
         - /home/cirrus/roms:/home/cirrus/roms
         - /home/cirrus/ccache:/home/cirrus/ccache
         - /home/cirrus/.config:/home/cirrus/.config
-  show_script:
-    - cat $CIRRUS_WORKING_DIR/build_rom.sh
-  sync_script:
-    - set -e
+    show_script:
+      - cat $CIRRUS_WORKING_DIR/build_rom.sh
+    sync_script:
+      - set -e
     - rom_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d / -f 4)
     - branch_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh | awk -F "-b " '{print $2}' | awk '{print $1}')
     - rom_name=$rom_name-$branch_name
