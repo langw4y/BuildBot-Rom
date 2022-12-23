@@ -1,11 +1,17 @@
 # sync rom
 repo init --depth=1 --no-repo-verify -u https://github.com/syberia-project/manifest.git -b 13.0 -g default,-mips,-darwin,-notdefault
 git clone https://github.com/galang8664/local_manifest.git --depth 1 -b syberia .repo/local_manifests
-repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
+repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 30 || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
 
 # build rom
 source build/envsetup.sh
 lunch syberia_lava-userdebug
+export CCACHE_DIR=/tmp/ccache
+export CCACHE_EXEC=$(which ccache)
+export USE_CCACHE=1
+ccache -M 20G
+ccache -o compression=true
+ccache -z 
 export SELINUX_IGNORE_NEVERALLOWS=true
 export TZ=Asia/Dhaka
 mka bacon -j10
