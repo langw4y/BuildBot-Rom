@@ -9,7 +9,7 @@ task:
     name: Build # Project name
     skip: $CIRRUS_BRANCH == 'main'
     only_if: $CIRRUS_REPO_OWNER == 'galang8664'
-    timeout_in: 240m # Otherwise it will timeout at 60m automatically, 120m highest in free account
+    timeout_in: 360m # Otherwise it will timeout at 60m automatically, 120m highest in free account
     persistent_worker:
       labels:
         name: lang
