@@ -13,7 +13,7 @@ git clone https://github.com/mt6768-dev/vendor_mediatek_opensource_interfaces.gi
 git clone https://github.com/R9Lab/GoodixOpenSourceInterfaces.git --depth 1 -b lineage-20 vendor/goodix/opensource/interfaces
 git clone https://github.com/R9Lab/MTKSepolicyVendor.git --depth 1 -b lineage-20 device/mediatek/sepolicy_vndr
 
-# build rom
+# build rom 1
 source build/envsetup.sh
 lunch evolution_lancelot-userdebug
 export CCACHE_DIR=/tmp/ccache
