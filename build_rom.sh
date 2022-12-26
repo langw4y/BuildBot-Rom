@@ -10,7 +10,7 @@ git clone https://github.com/kitw4y/ImsService --depth 1 -b lineage-20 packages/
 git clone https://github.com/kitw4y/android_packages_apps_MtkFMRadio --depth 1 -b lineage-20 packages/apps/MtkFMRadio
 git clone https://github.com/kitw4y/vendor_mediatek_opensource_interfaces --depth 1 -b lineage-20 vendor_mediatek_opensource_interfaces
 git clone https://github.com/kitw4y/vendor_goodix_opensource_interfaces --depth 1 -b lineage-20 vendor/goodix/opensource/interfaces
-git clone https://github.com/kitw4y/android_device_mediatek_sepolicy_vnd --depth 1 -b lineage-20 device/mediatek/sepolicy_vndr
+git clone https://github.com/kitw4y/android_device_mediatek_sepolicy_vndr --depth 1 -b lineage-20 device/mediatek/sepolicy_vndr
 
 # build rom 1
 source build/envsetup.sh
