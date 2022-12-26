@@ -1,5 +1,6 @@
 # sync rom
 sudo su
+apt update && apt install imagemagick
 repo init --depth=1 --no-repo-verify -u https://github.com/AICP/platform_manifest.git -b t13.0 -g default,-mips,-darwin,-notdefault
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 30 || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
 git clone https://github.com/kitw4y/device-new --depth 1 -b aicp device/xiaomi/lancelot
