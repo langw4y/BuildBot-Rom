@@ -1,5 +1,5 @@
 # sync rom
-repo init --depth=1 --no-repo-verify -u https://github.com/CipherOS/android_manifest.git -b twelve-L -g default,-mips,-darwin,-notdefault
+repo init --depth=1 --no-repo-verify -u https://github.com/CipherOS/android_manifest.git -b thirteen -g default,-mips,-darwin,-notdefault
 repo sync --force-sync --no-clone-bundle --current-branch --no-tags -j$(nproc --all)
 git clone https://github.com/kitw4y/device-new --depth 1 -b cipher device/xiaomi/lancelot
 git clone https://github.com/kitw4y/android_device_xiaomi_mt6768-common --depth 1 -b lineage-20 device/xiaomi/mt6768-common 
