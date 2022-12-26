@@ -14,6 +14,7 @@ git clone https://github.com/kitw4y/android_device_mediatek_sepolicy_vndr --dept
 
 # build rom 1
 source build/envsetup.sh
+breakfast lancelot
 lunch aicp_lancelot-userdebug
 export SELINUX_IGNORE_NEVERALLOWS=true
 export TZ=Asia/Kolkata #put before last build command
