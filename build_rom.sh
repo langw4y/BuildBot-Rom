@@ -3,7 +3,7 @@ repo init --depth=1 --no-repo-verify -u https://github.com/StatiXOS/android_mani
 git clone https://github.com/kitw4y/local_manifest.git --depth 1 -b statix .repo/local_manifests
 repo sync --force-sync --no-clone-bundle --current-branch --no-tags -j$(nproc --all)
 
-# build rom 
+# build rom 1
 source build/envsetup.sh
 lunch statix_lancelot-userdebug
 export SELINUX_IGNORE_NEVERALLOWS=true
