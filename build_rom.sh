@@ -4,7 +4,8 @@ git clone https://github.com/kitw4y/local_manifest.git --depth 1 -b los .repo/lo
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
 repo sync -j1 --fail-fast
 
-# build rom 
+# build rom 1
+sudo su
 source build/envsetup.sh
 breakfast lancelot
 export SELINUX_IGNORE_NEVERALLOWS=true
