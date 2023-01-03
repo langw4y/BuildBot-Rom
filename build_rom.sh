@@ -1,5 +1,5 @@
 # sync rom
-repo init --depth=1 --no-repo-verify -u repo init -u https://github.com/StatiXOS/android_manifest.git -b tm-qpr1 -g default,-mips,-darwin,-notdefault
+repo init --depth=1 --no-repo-verify -u https://github.com/StatiXOS/android_manifest.git -b tm-qpr1 -g default,-mips,-darwin,-notdefault
 git clone https://github.com/kitw4y/local_manifest.git --depth 1 -b statix .repo/local_manifests
 repo sync --force-sync --no-clone-bundle --current-branch --no-tags -j$(nproc --all)
 
