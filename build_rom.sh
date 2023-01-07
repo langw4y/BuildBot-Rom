@@ -6,6 +6,7 @@ repo sync --force-sync --no-clone-bundle --current-branch --no-tags -j$(nproc --
 # build rom 
 source build/envsetup.sh
 lunch statix_lancelot-userdebug
+export BUILD_BROKEN_MISSING_REQUIRED_MODULES=true
 export SELINUX_IGNORE_NEVERALLOWS=true
 export TZ=Asia/Kolkata #put before last build command
 brunch statix_lancelot-userdebug
