@@ -13,7 +13,7 @@ git clone https://github.com/mt6768-dev/android_packages_apps_MtkFMRadio --depth
 git clone https://github.com/mt6768-dev/proprietary_vendor_xiaomi_mt6768-common --depth 1 -b lineage-20 vendor/xiaomi/mt6768-common
 git clone https://github.com/mt6768-dev/android_device_mediatek_sepolicy_vndr --depth 1 -b lineage-20 device/mediatek/sepolicy_vndr
 
-# build rom 1
+# build rom 
 source build/envsetup.sh
 lunch derp_lancelot-userdebug
 export SELINUX_IGNORE_NEVERALLOWS=true
