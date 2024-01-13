@@ -1,0 +1,6 @@
+jobs:
+  bash-example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Group of log lines
+        run: ls && df -h
