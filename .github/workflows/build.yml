@@ -11,4 +11,4 @@ jobs:
           echo "secret-number=$the_secret" >> "$GITHUB_OUTPUT"
       - name: Use that secret output (protected by a mask)
         run: |
-          cd /mnt && mkdir -p ~/.bin && PATH="${HOME}/.bin:${PATH}" && curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo && chmod a+rx ~/.bin/repo && repo init --depth=1 --no-repo-verify -u https://github.com/AfterLifePrjkt13/android_manifest.git -b LTS -g default,-mips,-darwin,-notdefault && repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
+          mkdir -p ~/.bin && PATH="${HOME}/.bin:${PATH}" && curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo && chmod a+rx ~/.bin/repo && repo init --depth=1 --no-repo-verify -u https://github.com/AfterLifePrjkt13/android_manifest.git -b LTS -g default,-mips,-darwin,-notdefault && repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
